@@ -11,6 +11,7 @@ Add-Type -AssemblyName System.Drawing
     $form_Main.Size             = [Size]::new(800, 600)
     $form_Main.StartPosition    = [FormStartPosition]::CenterScreen
     $form_Main.BackColor        = [Color]::White
+    $form_Main.MaximizeBox      = $false
     $form_Main.Text             = "Installeur de PC candidat pour le titre TSSR"
     $form_Main.Add_Closing({
         if ($list_Process.Count -ne 0) {
@@ -278,6 +279,14 @@ Add-Type -AssemblyName System.Drawing
             #endregion
         #endregion<~-Onglet Audit-~>
 
+        #region<~-Onglet Netoyage-~>
+            #region<-TabPage_Netoyage->
+            $tabPage_Netoyage           = [TabPage]::new()
+            $tabPage_Netoyage.BackColor = [Color]::White
+            $tabPage_Netoyage.Text      = "Netoyage"
+            #endregion
+        #endregion
+
         #region<~-Onglet Remerciement-~>
             #region<-TabPage_Remerciement->
             $tabPage_Remerciement            = [TabPage]::new()
@@ -321,6 +330,7 @@ Add-Type -AssemblyName System.Drawing
         $tabControl_Onglets.TabPages.AddRange(@(
             $tabPage_Installer,
             $tabPage_Audit,
+            $tabPage_Netoyage,
             $tabPage_Remerciement
         ))
         #endregion
