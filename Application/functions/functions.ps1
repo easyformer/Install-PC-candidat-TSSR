@@ -163,3 +163,28 @@ function Start-CPUZ {
     $process = Start-Process $pathCPUZ -PassThru
     [void] $list_Process.Add($process)
 }
+
+function New-CandidatAccount {
+    $userName = "Candidat"
+    $password = "P@ssw0rd" | ConvertTo-SecureString -AsPlainText -Force
+
+    New-LocalUser -Name $username -Password $password -Description "Compte candidat TSSR" -AccountNeverExpires -PasswordNeverExpires -UserMayNotChangePassword
+}
+
+function Start-WindowsMAJ {
+    $UpdateSession = New-Object -ComObject Microsoft.Update.Session
+    $UpdateSearcher = $UpdateSession.CreateupdateSearcher()
+    $SearchResult = $UpdateSearcher.Search("IsInstalled=0")
+
+    $UpdateDownloader = $UpdateSession.CreateUpdateDownloader()
+    $UpdateDownloader.Updates = $SearchResult.Updates
+    [void] $UpdateDownloader.Download()
+
+    $UpdateInstaller = $UpdateSession.CreateUpdateInstaller()
+    $UpdateInstaller.Updates = $SearchResult.Updates
+    [void] $UpdateInstaller.Install()
+}
+
+function Disable-AutoUpdate  {
+    Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name AUOptions -Value 1
+}

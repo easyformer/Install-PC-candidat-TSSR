@@ -19,9 +19,9 @@ function Main {
 
     [Application]::EnableVisualStyles()
 
-    Get-OfficeAppsInstalled
+    #Get-OfficeAppsInstalled
 
-    Get-AuditInfo
+    #Get-AuditInfo
     
     [void] [Application]::Run($form_Main)
 }

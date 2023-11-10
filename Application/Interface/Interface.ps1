@@ -88,24 +88,25 @@ Add-Type -AssemblyName System.Drawing
                 #endregion
 
                 #region<-RadioButton_HyperV->
-                $radioButton_HyperV = [RadioButton]::new()
-                $radioButton_HyperV.Text = "HYPER V"
-                $radioButton_HyperV.AutoSize = $true
-                $radioButton_HyperV.Location = [Point]::new(30, 20)
+                $radioButton_HyperV             = [RadioButton]::new()
+                $radioButton_HyperV.Location    = [Point]::new(30, 20)
+                $radioButton_HyperV.AutoSize    = $true
+                $radioButton_HyperV.Text        = "HYPER V"
                 #endregion
 
                 #region<-RadioButton_VirtualBox->
-                $radioButton_VirtualBox = [RadioButton]::new()
-                $radioButton_VirtualBox.Text = "VIRTUALBOX"
-                $radioButton_VirtualBox.AutoSize = $true
-                $radioButton_VirtualBox.Location = [Point]::new(30, 50)
+                $radioButton_VirtualBox             = [RadioButton]::new()
+                $radioButton_VirtualBox.Location    = [Point]::new(30, 50)
+                $radioButton_VirtualBox.AutoSize    = $true
+                $radioButton_VirtualBox.Text        = "VIRTUALBOX"
+                
                 #endregion
 
                 #region<-RadioButton_VMware->
-                $radioButton_VMware = [RadioButton]::new()
-                $radioButton_VMware.Text = "VMWARE"
-                $radioButton_VMware.AutoSize = $true
-                $radioButton_VMware.Location = [Point]::new(30, 80)
+                $radioButton_VMware             = [RadioButton]::new()
+                $radioButton_VMware.Location    = [Point]::new(30, 80)
+                $radioButton_VMware.AutoSize    = $true
+                $radioButton_VMware.Text        = "VMWARE"
                 #endregion
 
                 #region<~Controls GroupBox_Hypervisor~>
@@ -208,6 +209,51 @@ Add-Type -AssemblyName System.Drawing
                 #endregion
             #endregion<~-Groupe Software-~>
 
+            #region<-Label_Configuration->
+            $label_Configuration             = [Label]::new()
+            $label_Configuration.Location    = [Point]::new(45, 300)
+            $label_Configuration.autosize    = $true
+            $label_Configuration.Text        = "Configuration:"
+            #endregion
+
+            #region<~-Groupe Configuration-~>
+                #region<-GroupBox_Configuration->
+                $groupBox_Configuration            = [GroupBox]::new()
+                $groupBox_Configuration.Location   = [Point]::new(35, 325)
+                $groupBox_Configuration.BackColor  = [Color]::FromArgb(0xFFF1F1F1)
+                $groupBox_Configuration.autosize   = $true
+                #endregion
+
+                #region<-CheckBox_LocalUser->
+                $checkBox_LocalUser             = [CheckBox]::new()
+                $checkBox_LocalUser.Location    = [Point]::new(30, 20)
+                $checkBox_LocalUser.AutoSize    = $true
+                $checkBox_LocalUser.Text        = "Créer le compte candidat"
+                #endregion
+
+                #region<-CheckBox_MAJWindows->
+                $checkBox_MAJWindows            = [CheckBox]::new()
+                $checkBox_MAJWindows.Location   = [Point]::new(30, 50)
+                $checkBox_MAJWindows.AutoSize   = $true
+                $checkBox_MAJWindows.Text       = "Effectuer les mises à jour Windows"
+                #endregion
+
+                #region<-CheckBox_DisableAutoUpdate->
+                $checkBox_DisableAutoUpdate             = [CheckBox]::new()
+                $checkBox_DisableAutoUpdate.Location    = [Point]::new(30, 80)
+                $checkBox_DisableAutoUpdate.AutoSize    = $true
+                $checkBox_DisableAutoUpdate.Text        = "Désactiver les mises à jour automatiques"
+                #endregion
+
+                #region<~Controls GroupBox_Configuration~>
+                $groupBox_Configuration.Controls.AddRange(@(
+                    $checkBox_LocalUser,
+                    $checkBox_MAJWindows,
+                    $checkBox_DisableAutoUpdate
+                ))
+                #endregion
+            #endregion<~-Groupe Configuration-~>
+
             #region<~Controls TabPage_Installer~>
             $tabPage_Installer.Controls.AddRange(@(
                 $label_Hypervisor,
@@ -215,7 +261,9 @@ Add-Type -AssemblyName System.Drawing
                 $officeLabel,
                 $groupBox_Office,
                 $label_Software,
-                $groupBox_Software
+                $groupBox_Software,
+                $label_Configuration,
+                $groupBox_Configuration
             ))
             #endregion
         #endregion<~-Onglet Installeur-~>
@@ -291,7 +339,7 @@ Add-Type -AssemblyName System.Drawing
             #region<-TabPage_Remerciement->
             $tabPage_Remerciement            = [TabPage]::new()
             $tabPage_Remerciement.BackColor  = [Color]::White
-            $tabPage_Remerciement.Text = "Remerciement"
+            $tabPage_Remerciement.Text      = "Remerciement"
             #endregion
 
             #region<-Label_Remerciement->
