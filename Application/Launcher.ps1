@@ -12,16 +12,29 @@ Add-Type -AssemblyName System.Collections
 
 #region<~~Variables~~>
 $list_Process = [ArrayList]::new()
+$list_Apps = [ArrayList]::new(@(
+    "Microsoft 365",
+    "Libre Office",
+    "Open Office",
+    "VMWare Workstation",
+    "Virtual Box",
+    "Putty",
+    "Adobe Acrobat",
+    "WireShark"
+))
+$dictionary_Apps = [hashtable]::new()
 #endregion
 
 function Main {
-    $list_Process.Clear() # retrait de l'erreur de non utilisation de l'IDE
+    [void] $list_Process.Count # retrait de l'erreur de non utilisation de l'IDE
+    [void] $list_Apps.Count # retrait de l'erreur de non utilisation de l'IDE
+    [void] $dictionary_Apps.Count # retrait de l'erreur de non utilisation de l'IDE
 
     [Application]::EnableVisualStyles()
 
-    #Get-OfficeAppsInstalled
+    Get-InstalledApps
 
-    #Get-AuditInfo
+    Get-AuditInfo
     
     [void] [Application]::Run($form_Main)
 }

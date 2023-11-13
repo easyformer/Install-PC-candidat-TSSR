@@ -118,6 +118,16 @@ Add-Type -AssemblyName System.Drawing
                 #endregion
             #endregion<~-Groupe Hyperviseur-~>
 
+            #region<-Checkbox_Unistall->
+            $checkBox_Unistall = [CheckBox]::new()
+            $checkBox_Unistall.Location = [Point]::new(35, 255)
+            $checkBox_Unistall.AutoSize = $true
+            $checkBox_Unistall.Text = "Désinstaller"
+            $checkBox_Unistall.Add_CheckStateChanged({
+                test
+            })
+            #endregion
+
             #region<-Label_Office->
             $officeLabel            = [Label]::new()
             $officeLabel.Location   = [Point]::new(290, 110)
@@ -258,6 +268,7 @@ Add-Type -AssemblyName System.Drawing
             $tabPage_Installer.Controls.AddRange(@(
                 $label_Hypervisor,
                 $groupBox_Hypervisor,
+                $checkBox_Unistall,
                 $officeLabel,
                 $groupBox_Office,
                 $label_Software,

@@ -128,33 +128,23 @@ function Get-AuditInfo {
     Get-StorageInfo
 }
 
-function Get-OfficeAppsInstalled {
-    $apps = Get-WmiObject -Class Win32_Product
+function Get-InstalledApps {
+    $win32Apps = Get-WmiObject -Class Win32_Product | Select-Object -Property Name
+    $registryApps = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName
 
-    if ($apps | Where-Object Name -Like "Office 16 Click-to-Run*") {
-        $radioButtion_MSOffice.ForeColor = $color_Green
-    }
+    foreach ($app in $list_Apps) {
+        $search = "*" + $app + "*"
 
-    else {
-        $radioButtion_MSOffice.ForeColor = $color_Red
-    }
+        if (($win32Apps -like $search) -or ($registryApps -like $search)) {
+            $value = $true
+        }
 
+        else {
+            $value = $false
+        }
 
-    if ($apps | Where-Object Name -Like "LibreOffice*") {
-        $radioButtion_LibreOffice.ForeColor = $color_Green
-    }
-
-    else {
-        $radioButtion_LibreOffice.ForeColor = $color_Red
-    }
-
-
-    if ($apps | Where-Object Name -Like "Openoffice*") {
-        $radioButtion_OpenOffice.ForeColor = $color_Green
-    }
-
-    else {
-        $radioButtion_OpenOffice.ForeColor = $color_Red
+        $key = $app
+        [void] $dictionary_Apps.Add($key, $value)
     }
 }
 
@@ -187,4 +177,8 @@ function Start-WindowsMAJ {
 
 function Disable-AutoUpdate  {
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name AUOptions -Value 1
+}
+
+function test {
+    Write-Host "coucou"
 }
