@@ -1,8 +1,10 @@
 #region<~~Chargement des éléments de l'interface graphique~~>
 using namespace System.Windows.Forms
 using namespace System.Drawing
+using namespace System.Collections
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Collections
 #endregion
 
 #region<~~Définition des variables~~>
@@ -25,7 +27,7 @@ function Get-RAMInfo {
         $couleur = $color_Green
     }
 
-    New-ListViewItem -Type "RAM" -Information "$ramCapacityGB GB" -Prerequis $etatPrerequis -Couleur $couleur
+    New-ListViewItem -Arg1 "RAM" -Arg2 "$ramCapacityGB GB" -Arg3 $etatPrerequis -Couleur $couleur -ListView $listView_Audit
 }
 
 function Get-OperatingSystem {
@@ -53,7 +55,7 @@ function Get-OperatingSystem {
         }
     }
 
-    New-ListViewItem -Type "OS" -Information "$name $version" -Prerequis $etatPrerequis -Couleur $couleur
+    New-ListViewItem -Arg1 "OS" -Arg2 "$name $version" -Arg3 $etatPrerequis -Couleur $couleur -ListView $listView_Audit
 }
 
 function Get-ProcessorInfo {
@@ -73,7 +75,7 @@ function Get-ProcessorInfo {
         $couleur = $color_Red
     }
 
-    New-ListViewItem -Type "Processeur" -Information "$name  $cores coeurs" -Prerequis $etatPrerequis -Couleur $couleur
+    New-ListViewItem -Arg1 "Processeur" -Arg2 "$name  $cores coeurs" -Arg3 $etatPrerequis -Couleur $couleur -ListView $listView_Audit
 }
 
 function Get-StorageInfo {
@@ -96,24 +98,35 @@ function Get-StorageInfo {
             $couleur = $color_Green
         }
 
-        New-ListViewItem -Type "Stockage" -Information "Volume $drive  $diskSizeGB GB  $diskFreeSpaceGB GB Libre" -Prerequis $etatPrerequis -Couleur $couleur
+        New-ListViewItem -Arg1 "Stockage" -Arg2 "Volume $drive  $diskSizeGB GB  $diskFreeSpaceGB GB Libre" -Arg3 $etatPrerequis -Couleur $couleur -ListView $listView_Audit
     }
 }
 
 function New-ListViewItem {
     param (
-        [Parameter(Mandatory = $true)] $Type,
-        [Parameter(Mandatory = $true)] $Information,
-        [Parameter(Mandatory = $true)] $Prerequis,
-        [Parameter(Mandatory = $true)] $Couleur
+        [Parameter()] $Arg1,
+        [Parameter(Mandatory = $true)] $Arg2,
+        [Parameter(Mandatory = $true)] $Arg3,
+        [Parameter()] $Couleur,
+        [Parameter(Mandatory = $true)] $ListView
     )
 
-    $listViewItem = [ListViewItem]::new($Type)
-    [void] $listViewItem.SubItems.Add($Information)
-    [void] $listViewItem.SubItems.Add($Prerequis)
-    $listViewItem.ForeColor = $Couleur
+    if ($null -eq $Arg1) {
+        $listViewItem = [ListViewItem]::new()
+    }
 
-    [void] $listView_Audit.Items.Add($listViewItem)
+    else {
+        $listViewItem = [ListViewItem]::new($Arg1)
+    }
+
+    [void] $listViewItem.SubItems.Add($Arg2)
+    [void] $listViewItem.SubItems.Add($Arg3)
+
+    if ($null -ne $Couleur) {
+        $listViewItem.ForeColor = $Couleur
+    }
+
+    [void] $ListView.Items.Add($listViewItem)
 }
 
 function Get-AuditInfo {
@@ -149,7 +162,7 @@ function Get-InstalledApps {
 }
 
 function Start-CPUZ {
-    $pathCPUZ = "$PSScriptRoot\..\Outils\cpuz.exe"
+    $pathCPUZ = "$PSScriptRoot\..\Outils\App CPU-Z\cpuz.exe"
     $process = Start-Process $pathCPUZ -PassThru
     [void] $list_Process.Add($process)
 }
@@ -179,6 +192,120 @@ function Disable-AutoUpdate  {
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name AUOptions -Value 1
 }
 
-function test {
-    Write-Host "coucou"
+function Install-Chocolatey {
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+
+function Show-TronArguments {
+    $list_Arguments = [ArrayList]::new(@(
+        "-a",
+        "-asm",
+        "-c",
+        "-d",
+        "-dev",
+        "-e",
+        "-er",
+        "-m",
+        "-o",
+        "-p",
+        "-pmb",
+        "-r",
+        "-sa",
+        "-sac",
+        "-sap",
+        "-scc",
+        "-scs",
+        "-sd",
+        "-sdb",
+        "-sdc",
+        "-sdu",
+        "-se",
+        "-sk",
+        "-sm",
+        "-sor",
+        "-spr",
+        "-ss",
+        "-str",
+        "-swu",
+        "-swo",
+        "-udl",
+        "-v"
+    ))
+
+    $list_TronArgumentsDescription = [ArrayList]::new(@(
+        "Automatic mode (no prompts; implies -e)",
+        "Automatic mode (no prompts; implies -e; reboots to Safe Mode first)",
+        "Config dump (show config. Can be used with other switches to see what WOULD happen, but script will never execute if this switch is used)",
+        "Dry run (run through script without executing any jobs)",
+        "Override OS detection (allow running on unsupported Windows versions)",
+        "Accept EULA (suppress disclaimer warning screen)",
+        "Email a report when finished. Requires you to configure SwithMailSettings.xml",
+        "Preserve OEM Metro apps (don't remove them)",
+        "Power off after running (overrides -r)",
+        "Preserve power settings (don't reset to Windows default)",
+        "Preserve Malwarebytes (don't uninstall it) after Tron is complete",
+        "Reboot (auto-reboot 15 seconds after completion)",
+        "Skip ALL antivirus scans (AdwCleaner, KVRT, MBAM, SAV)",
+        "Skip AdwCleaner scan",
+        "Skip application patches (don't patch 7-Zip)",
+        "Skip cookie cleanup (not recommended, Tron auto-preserves most common login cookies)",
+        "Skip custom scripts (has no effect if you haven't supplied custom scripts)",
+        "Skip defrag (force Tron to ALWAYS skip Stage 5 defrag)",
+        "Skip de-bloat (entire OEM bloatware removal process; implies -m)",
+        "Skip DISM Cleanup (SxS component store deflation)",
+        "Skip debloat update. Prevent Tron from auto-updating the S2 debloat lists",
+        "Skip Event Log clear (don't backup and clear Windows Event Logs)",
+        "Skip Kaspersky Virus Rescue Tool (KVRT) scan",
+        "Skip Malwarebytes Anti-Malware (MBAM) installation",
+        "Skip OneDrive removal regardless whether it's in use or not",
+        "Skip page file settings reset (don't set to 'Let Windows manage the page file')",
+        "Skip Sophos Anti-Virus (SAV) scan",
+        "Skip Telemetry Removal (just turn off Telemetry instead of removing it)",
+        "Skip Windows Updates entirely (ignore both WSUS Offline and online methods)",
+        "Skip user-supplied WSUS Offline updates (if they exist; online updates still attempted)",
+        "Upload debug logs. Send tron.log and the system GUID dump to the Tron developer",
+        "Verbose. Show as much output as possible. NOTE: Significantly slower!"
+    ))
+
+    [void] $listView_Netoyage.Columns.Add(" ", 30)
+    [void] $listView_Netoyage.Columns.Add("Arguments", 75)
+    [void] $listView_Netoyage.Columns.Add("Description", 760)
+
+    $cpt = 0
+
+    foreach ($arg in $list_Arguments) {
+        $description = $list_TronArgumentsDescription[$cpt]
+
+        New-ListViewItem -Arg2 $arg -Arg3 $description -ListView $listView_Netoyage
+
+        $cpt += 1
+    }
+
+}
+
+function Start-TestTron {
+    $tronPath = "$PSScriptRoot\..\Outils\App TRON\tron\tron.bat"
+
+    $list_Arguments = [ArrayList]::new()
+
+    foreach ($item in $listView_Netoyage.Items) {
+
+        if ($item.Checked -eq $true) {
+            $arg = $item.SubItems[1].Text
+            [void] $list_Arguments.Add($arg)
+        }
+   }
+
+    $messageBox = [MessageBox]::Show(
+        "Attention, pendant l'exécution de TRON, une étape fermera toutes les applications ouvertes.`n Etez-vous sur de vouloir lancer TRON ?",    
+        "TRON",
+        [MessageBoxButtons]::OKCancel,
+        [MessageBoxIcon]::Information
+    )
+
+    if ($messageBox -eq "OK") {
+        Start-Process -Verb RunAs -FilePath $tronPath -ArgumentList $list_Arguments -Wait
+    }
 }

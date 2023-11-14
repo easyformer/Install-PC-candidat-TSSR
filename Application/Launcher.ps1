@@ -22,6 +22,30 @@ $list_Apps = [ArrayList]::new(@(
     "Adobe Acrobat",
     "WireShark"
 ))
+$list_Chocolatey = [ArrayList]::new(@(
+    "putty",
+    "winscp",
+    "winmerge",
+    "wireshark",
+    "googlechrome",
+    "brave",
+    "tor-browser",
+    "microsoft-office",
+    "visio",
+    "teams",
+    "zoom",
+    "notepadplusplus",
+    "vmwareworkstation",
+    "anydesk",
+    "teamviewer",
+    "bitvise-ssh-client",
+    "cyberduck",
+    "puttysessionsmanager",
+    "balenaetcher",
+    "advanced-ip-scanner",
+    "netcat",
+    "drawio"
+))
 $dictionary_Apps = [hashtable]::new()
 #endregion
 
@@ -32,9 +56,11 @@ function Main {
 
     [Application]::EnableVisualStyles()
 
-    Get-InstalledApps
+    #Get-InstalledApps
 
     Get-AuditInfo
+
+    Show-TronArguments
     
     [void] [Application]::Run($form_Main)
 }

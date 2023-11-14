@@ -7,11 +7,14 @@ Add-Type -AssemblyName System.Drawing
 
 #region<~~Interface graphique~~>
     #region<-Form_Main->
+    $size                       = [Size]::new(800, 600)
     $form_Main                  = [Form]::new()
-    $form_Main.Size             = [Size]::new(800, 600)
     $form_Main.StartPosition    = [FormStartPosition]::CenterScreen
     $form_Main.BackColor        = [Color]::White
     $form_Main.MaximizeBox      = $false
+    $form_Main.Size             = $size
+    $form_Main.MinimumSize      = $size
+    $form_Main.MaximumSize      = $size
     $form_Main.Text             = "Installeur de PC candidat pour le titre TSSR"
     $form_Main.Add_Closing({
         if ($list_Process.Count -ne 0) {
@@ -65,11 +68,11 @@ Add-Type -AssemblyName System.Drawing
         $tabControl_Onglets.Dock    = [DockStyle]::Fill
         #endregion
         
-        #region<~-Onglet Installeur-~>
-            #region<-TabPage_Installer->
-            $tabPage_Installer              = [TabPage]::new()
-            $tabPage_Installer.BackColor    = [Color]::White
-            $tabPage_Installer.Text         = "Installeur"
+        #region<~-Onglet Configuration-~>
+            #region<-TabPage_Configuration->
+            $tabPage_Configuration              = [TabPage]::new()
+            $tabPage_Configuration.BackColor    = [Color]::White
+            $tabPage_Configuration.Text         = "Configuration"
             #endregion
 
             #region<-Label_Hypervisor->
@@ -124,7 +127,7 @@ Add-Type -AssemblyName System.Drawing
             $checkBox_Unistall.AutoSize = $true
             $checkBox_Unistall.Text = "Désinstaller"
             $checkBox_Unistall.Add_CheckStateChanged({
-                test
+               
             })
             #endregion
 
@@ -264,8 +267,8 @@ Add-Type -AssemblyName System.Drawing
                 #endregion
             #endregion<~-Groupe Configuration-~>
 
-            #region<~Controls TabPage_Installer~>
-            $tabPage_Installer.Controls.AddRange(@(
+            #region<~Controls TabPage_Configuration~>
+            $tabPage_Configuration.Controls.AddRange(@(
                 $label_Hypervisor,
                 $groupBox_Hypervisor,
                 $checkBox_Unistall,
@@ -277,7 +280,7 @@ Add-Type -AssemblyName System.Drawing
                 $groupBox_Configuration
             ))
             #endregion
-        #endregion<~-Onglet Installeur-~>
+        #endregion<~-Onglet Configuration-~>
 
         #region<~-Onglet Audit-~>
             #region<-TabPage_Audit->
@@ -338,11 +341,63 @@ Add-Type -AssemblyName System.Drawing
             #endregion
         #endregion<~-Onglet Audit-~>
 
+        #region<~-Onglet Logiciels-~>
+            #region<-TabPage_Logiciels->
+            $tabPage_Logiciels           = [TabPage]::new()
+            $tabPage_Logiciels.BackColor = [Color]::White
+            $tabPage_Logiciels.Text      = "Logiciels"
+            #endregion
+
+            #region<~Controls TabPage_Logiciels~>
+            $tabPage_Logiciels.Controls.AddRange(@(
+
+            ))
+            #endregion
+        #endregion<~-Onglet Logiciels-~>
+
         #region<~-Onglet Netoyage-~>
             #region<-TabPage_Netoyage->
             $tabPage_Netoyage           = [TabPage]::new()
             $tabPage_Netoyage.BackColor = [Color]::White
             $tabPage_Netoyage.Text      = "Netoyage"
+            #endregion
+
+            #region<-Button_Tron->
+            $button_Tron            = [Button]::new()
+            $button_Tron.Location   = [Point]::new(670, 145)
+            $button_Tron.Size       = [Size]::new(95, 25)
+            $button_Tron.Text       = "Lancer TRON *"
+            $button_Tron.Add_Click({
+                Start-TestTron
+            })
+            #endregion
+
+            #region<-ListView_Netoyage->
+            $listView_Netoyage              = [ListView]::new()
+            $listView_Netoyage.Location     = [Point]::new(10, 175)
+            $listView_Netoyage.Size         = [Size]::new(755, 340)
+            $listView_Netoyage.View         = [View]::Details
+            $listView_Netoyage.CheckBoxes   = $true
+            #endregion
+
+            #region<-Label_DetailsTron->
+            $label_DetailsTron          = [Label]::new()
+            $label_DetailsTron.Location = [Point]::new(10, 520)
+            $label_DetailsTron.Size     = [Size]::new(600, 20)
+            $label_DetailsTron.Font     = [Font]::new(
+                [FontFamily]::new('Arial'),
+                8,
+                [FontStyle]::Italic
+            )
+            $label_DetailsTron.Text = "* TRON est un logiciel de débogage, de maintenance et d'optimisation pour systèmes Windows"
+            #endregion
+            
+            #region<~Controls TabPage_Netoyage~>
+            $tabPage_Netoyage.Controls.AddRange(@(
+                $button_Tron,
+                $listView_Netoyage,
+                $label_DetailsTron
+            ))
             #endregion
         #endregion
 
@@ -387,8 +442,9 @@ Add-Type -AssemblyName System.Drawing
 
         #region<~Controls TabControl_Onglets~>
         $tabControl_Onglets.TabPages.AddRange(@(
-            $tabPage_Installer,
+            $tabPage_Configuration,
             $tabPage_Audit,
+            $tabPage_Logiciels,
             $tabPage_Netoyage,
             $tabPage_Remerciement
         ))
