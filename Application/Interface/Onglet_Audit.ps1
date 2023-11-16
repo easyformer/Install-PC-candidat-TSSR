@@ -1,3 +1,10 @@
+#region<~~Chargement des éléments de l'interface graphique~~>
+using namespace System.Windows.Forms
+using namespace System.Drawing
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+#endregion
+
 #region<~-Onglet Audit-~>
     #region<-TabPage_Audit->
     $tabPage_Audit           = [TabPage]::new()
