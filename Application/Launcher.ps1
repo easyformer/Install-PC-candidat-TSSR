@@ -22,6 +22,7 @@ $list_Apps = [ArrayList]::new(@(
     "Adobe Acrobat",
     "WireShark"
 ))
+<#
 $list_Chocolatey = [ArrayList]::new(@(
     "putty",
     "winscp",
@@ -46,6 +47,7 @@ $list_Chocolatey = [ArrayList]::new(@(
     "netcat",
     "drawio"
 ))
+#>
 $dictionary_Apps = [hashtable]::new()
 #endregion
 
