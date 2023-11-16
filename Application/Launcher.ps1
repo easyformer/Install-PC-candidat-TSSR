@@ -6,7 +6,7 @@ Add-Type -AssemblyName System.Collections
 #endregion
 
 #region<~~DOT Sourcing des différents fichiers~~>
-. "$PSScriptRoot\functions\functions.ps1"
+. "$PSScriptRoot\Functions\Functions_Main.ps1"
 . "$PSScriptRoot\Interface\Interface_Main.ps1"
 #endregion
 

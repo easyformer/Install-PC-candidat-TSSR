@@ -18,7 +18,7 @@ Add-Type -AssemblyName System.Drawing
     $button_Tron.Size       = [Size]::new(95, 25)
     $button_Tron.Text       = "Lancer TRON *"
     $button_Tron.Add_Click({
-        Start-TestTron
+        Start-Tron
     })
     #endregion
 
