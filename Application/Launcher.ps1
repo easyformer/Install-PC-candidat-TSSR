@@ -1,4 +1,4 @@
-#region<~~Chargement des éléments de l'interface graphique~~>
+﻿#region<~~Chargement des éléments de l'interface graphique~~>
 using namespace System.Windows.Forms
 using namespace System.Collections
 Add-Type -AssemblyName System.Windows.Forms
@@ -6,10 +6,13 @@ Add-Type -AssemblyName System.Collections
 #endregion
 
 #region<~~DOT Sourcing des différents fichiers~~>
+        #-----Functions-----
 . "$PSScriptRoot\Functions\Functions_Main.ps1"
 . "$PSScriptRoot\Functions\Functions_Netoyage.ps1"
 . "$PSScriptRoot\Functions\Functions_Audit.ps1"
 . "$PSScriptRoot\Functions\Functions_Logiciels.ps1"
+    
+        #------Interfaces-----
 . "$PSScriptRoot\Interface\Interface_Main.ps1"
 #endregion
 

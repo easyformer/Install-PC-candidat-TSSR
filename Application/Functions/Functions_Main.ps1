@@ -1,4 +1,4 @@
-#region<~~Chargement des éléments de l'interface graphique~~>
+﻿#region<~~Chargement des éléments de l'interface graphique~~>
 using namespace System.Windows.Forms
 Add-Type -AssemblyName System.Windows.Forms
 #endregion

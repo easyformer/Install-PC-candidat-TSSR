@@ -1,4 +1,4 @@
-function Get-InstalledApps {
+﻿function Get-InstalledApps {
     $win32Apps = Get-WmiObject -Class Win32_Product | Select-Object -Property Name
     $registryApps = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName
 

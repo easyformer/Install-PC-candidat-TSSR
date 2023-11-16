@@ -1,4 +1,4 @@
-#region<~~Chargement des éléments de l'interface graphique~~>
+﻿#region<~~Chargement des éléments de l'interface graphique~~>
 using namespace System.Drawing
 Add-Type -AssemblyName System.Drawing
 #endregion
