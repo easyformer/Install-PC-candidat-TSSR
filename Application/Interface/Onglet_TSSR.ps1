@@ -9,7 +9,7 @@ Add-Type -AssemblyName System.Drawing
     #region<-TabPage_Configuration->
     $tabPage_Configuration              = [TabPage]::new()
     $tabPage_Configuration.BackColor    = [Color]::White
-    $tabPage_Configuration.Text         = "Configuration"
+    $tabPage_Configuration.Text         = "TSSR"
     #endregion
 
     #region<-Label_Hypervisor->

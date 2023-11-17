@@ -67,10 +67,14 @@ Add-Type -AssemblyName System.Drawing
         $tabControl_Onglets         = [TabControl]::new()
         $tabControl_Onglets.Dock    = [DockStyle]::Fill
         #endregion
+
+        #region<~-Onglet EasyFormer~>
+        . "$PSScriptRoot\Onglet_EasyFormer.ps1"
+        #endregion<~-Onglet EasyFormer~>
         
-        #region<~-Onglet Configuration-~>
-            . "$PSScriptRoot\Onglet_Configuration.ps1"
-        #endregion<~-Onglet Configuration-~>
+        #region<~-Onglet TSSR~>
+            . "$PSScriptRoot\Onglet_TSSR.ps1"
+        #endregion<~-Onglet TSSR~>
             
         #region<~-Onglet Audit-~>
             . "$PSScriptRoot\Onglet_Audit.ps1"
@@ -90,6 +94,7 @@ Add-Type -AssemblyName System.Drawing
 
         #region<~Controls TabControl_Onglets~>
         $tabControl_Onglets.TabPages.AddRange(@(
+            $tabPage_EasyFormer,
             $tabPage_Configuration,
             $tabPage_Audit,
             $tabPage_Logiciels,
