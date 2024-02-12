@@ -6,6 +6,9 @@ Add-Type -AssemblyName System.Collections
 #endregion
 
 #region<~~DOT Sourcing des différents fichiers~~>
+        #-----Class-----
+. "$PSScriptRoot\Class\Class_Obj_App.ps1"
+
         #-----Functions-----
 . "$PSScriptRoot\Functions\Functions_Main.ps1"
 . "$PSScriptRoot\Functions\Functions_Netoyage.ps1"
@@ -17,58 +20,37 @@ Add-Type -AssemblyName System.Collections
 #endregion
 
 #region<~~Variables~~>
+$chocolatey_Installation = $null
+$list_RegistryApps = [ArrayList]::new()
+$list_Win32Apps = [ArrayList]::new()
+$list_ChocolateyApps = [ArrayList]::new()
 $list_Process = [ArrayList]::new()
-$list_Apps = [ArrayList]::new(@(
-    "Microsoft 365",
-    "Libre Office",
-    "Open Office",
-    "VMWare Workstation",
-    "Virtual Box",
-    "Putty",
-    "Adobe Acrobat",
-    "WireShark"
-))
-<#
-$list_Chocolatey = [ArrayList]::new(@(
-    "putty",
-    "winscp",
-    "winmerge",
-    "wireshark",
-    "googlechrome",
-    "brave",
-    "tor-browser",
-    "microsoft-office",
-    "visio",
-    "teams",
-    "zoom",
-    "notepadplusplus",
-    "vmwareworkstation",
-    "anydesk",
-    "teamviewer",
-    "bitvise-ssh-client",
-    "cyberduck",
-    "puttysessionsmanager",
-    "balenaetcher",
-    "advanced-ip-scanner",
-    "netcat",
-    "drawio"
-))
-#>
-$dictionary_Apps = [hashtable]::new()
+$list_ObjectApps = [ArrayList]::new()
 #endregion
 
 function Main {
+    [void] $list_RegistryApps.Count # retrait de l'erreur de non utilisation de l'IDE
+    [void] $list_Win32Apps.Count # retrait de l'erreur de non utilisation de l'IDE
+    [void] $list_ChocolateyApps.Count # retrait de l'erreur de non utilisation de l'IDE
     [void] $list_Process.Count # retrait de l'erreur de non utilisation de l'IDE
-    [void] $list_Apps.Count # retrait de l'erreur de non utilisation de l'IDE
-    [void] $dictionary_Apps.Count # retrait de l'erreur de non utilisation de l'IDE
+    [void] $list_ObjectApps.Count # retrait de l'erreur de non utilisation de l'IDE
+    if ($chocolatey_Installation) {
+        # retrait de l'erreur de non utilisation de l'IDE
+    }
 
     [Application]::EnableVisualStyles()
 
     #Get-InstalledApps
 
-    Get-AuditInfo
+    #Get-AuditInfo
 
-    Show-TronArguments
+    #Show-TronArguments
+
+    Get-Chocolatey
+
+    Set-ObjApp
+
+    Show-Logiciels
     
     [void] [Application]::Run($form_Main)
 }

@@ -67,8 +67,67 @@ function Disable-AutoUpdate  {
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" -Name AUOptions -Value 1
 }
 
-function Install-Chocolatey {
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+function Set-ObjApp {
+    $list_Apps = [ArrayList]::new(@(
+        "Microsoft 365",
+        "Libre Office",
+        "VMWare Workstation",
+        "Virtual Box",
+        "Putty",
+        "Adobe Acrobat Reader",
+        "WinSCP",
+        "Wireshark",
+        "WinMerge",
+        "Google Chrome",
+        "Brave",
+        "Tor Browser",
+        "Teams",
+        "Zoom",
+        "Notepad++",
+        "AnyDesk",
+        "Team Viewer",
+        "Bitvise",
+        "Cyberduck",
+        "Etcher",
+        "Advanced IP Scanner",
+        "Netcat",
+        "Draw.io"
+    ))
+
+    $list_Chocolatey = [ArrayList]::new(@(
+        "office365business",
+        "libreoffice-still",
+        "vmwareworkstation",
+        "virtualbox ",
+        "putty",
+        "adobereader",
+        "winscp",
+        "wireshark",
+        "winmerge",
+        "googlechrome",
+        "brave",
+        "tor-browser",
+        "microsoft-teams",
+        "zoom",
+        "notepadplusplus",
+        "anydesk",
+        "teamviewer9",
+        "bitvise-ssh-client",
+        "cyberduck",
+        "etcher",
+        "advanced-ip-scanner",
+        "netcat",
+        "drawio"
+    ))
+
+    $cpt = 0
+    foreach($app in $list_Apps) {
+        $chocolateyName = $list_Chocolatey[$cpt]
+
+        $obj_App = [obj_App]::new($app, $chocolateyName, $false)
+
+        [void] $list_ObjectApps.Add($obj_App)
+
+        $cpt += 1
+    }
 }
