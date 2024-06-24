@@ -6,8 +6,8 @@ Add-Type -AssemblyName System.Windows.Forms
 function New-ListViewItem {
     param (
         [Parameter()] $Arg1,
-        [Parameter(Mandatory = $true)] $Arg2,
-        [Parameter(Mandatory = $true)] $Arg3,
+        [Parameter()] $Arg2,
+        [Parameter()] $Arg3,
         [Parameter()] $Couleur,
         [Parameter(Mandatory = $true)] $ListView
     )
@@ -20,8 +20,13 @@ function New-ListViewItem {
         $listViewItem = [ListViewItem]::new($Arg1)
     }
 
-    [void] $listViewItem.SubItems.Add($Arg2)
-    [void] $listViewItem.SubItems.Add($Arg3)
+    if ($null -ne $Arg2) {
+        [void] $listViewItem.SubItems.Add($Arg2)
+    }
+
+    if ($null -ne $Arg3) {
+        [void] $listViewItem.SubItems.Add($Arg3)
+    }
 
     if ($null -ne $Couleur) {
         $listViewItem.ForeColor = $Couleur

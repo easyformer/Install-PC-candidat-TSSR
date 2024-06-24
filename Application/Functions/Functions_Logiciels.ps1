@@ -42,8 +42,6 @@ function Get-Chocolatey {
 }
 
 function Get-InstalledApps {
-    $list_AllApps.Clear()
-
     $win32Apps = Get-WmiObject -Class Win32_Product | Select-Object -Property Name
     Start-LoopApps -Apps $win32Apps -List $list_Win32Apps
 
@@ -123,21 +121,3 @@ function Update-ListViewLogiciel {
         }
     }
 }
-
-
-<#
-foreach ($app in $list_Apps) {
-    $search = "*" + $app + "*"
-
-    if (($win32Apps -like $search) -or ($registryApps -like $search)) {
-        $value = $true
-    }
-
-    else {
-        $value = $false
-    }
-
-    $key = $app
-    [void] $dictionary_Apps.Add($key, $value)
-}
-#>

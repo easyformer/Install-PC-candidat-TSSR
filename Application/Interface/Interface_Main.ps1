@@ -9,6 +9,7 @@ Add-Type -AssemblyName System.Drawing
     #region<-Form_Main->
     $size                       = [Size]::new(800, 600)
     $form_Main                  = [Form]::new()
+    $form_Main.Icon             = [Icon]::new("$PSScriptRoot\..\Assets\Icone Chouette EasyFormer.ico")
     $form_Main.StartPosition    = [FormStartPosition]::CenterScreen
     $form_Main.BackColor        = [Color]::White
     $form_Main.MaximizeBox      = $false
@@ -33,7 +34,7 @@ Add-Type -AssemblyName System.Drawing
     $pictureBox_ImageEF             = [PictureBox]::new()
     $pictureBox_ImageEF.Location    = [Point]::new(10, 30)
     $pictureBox_ImageEF.Size        = [Size]::new(110, 90)
-    $pictureBox_ImageEF.Image       = [Image]::FromFile("$PSScriptRoot\..\Assets\logo.png") 
+    $pictureBox_ImageEF.Image       = [Image]::FromFile("$PSScriptRoot\..\Assets\Logo EasyFormer.png") 
     #endregion
 
     #region<-Label_Title->

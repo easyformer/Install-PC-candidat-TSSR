@@ -12,15 +12,23 @@ Add-Type -AssemblyName System.Drawing
     $tabPage_Remerciement.Text      = "Remerciement"
     #endregion
 
+    #region<-ListView_Netoyage->
+    $listView_Remerciement              = [ListView]::new()
+    $listView_Remerciement.Location     = [Point]::new(10, 175)
+    $listView_Remerciement.Size         = [Size]::new(755, 340)
+    $listView_Remerciement.View         = [View]::Details
+    #endregion
+
     #region<-Label_Remerciement_Contributeurs->
     $label_Remerciement_Contributeurs           = [Label]::new()
-    $label_Remerciement_Contributeurs.Location  = [Point]::new(50, 420)
-    $label_Remerciement_Contributeurs.Size      = [Size]::new(600, 400)
-    $label_Remerciement_Contributeurs.Text      = "Merci à tout les généreux contributeurs:`n`nAlex FALZON, Zaide Flanders, Christophe Tabary, Guillaume Cluzel, Louis Lemerle, Haymadou Nemaga, Abdessalem BENAROUS, Houdaifa Guemour, Abdelhamid MEDIOUNA, Radouane KHAIZ, Mohand ALIOUCHE, Stan AKE, Reaksmey CHIA, Joseph ABENGOYAP AKAME, Samuel POULADE, Yuanyuan Wensia MBOUKOU MAYELA"
+    $label_Remerciement_Contributeurs.Location  = [Point]::new(10, 145)
+    $label_Remerciement_Contributeurs.Size      = [Size]::new(250, 20)
+    $label_Remerciement_Contributeurs.Text      = "Merci à tout les généreux contributeurs :"
     #endregion
 
     #region<~Controls TabPage_Remerciement~>
     $tabPage_Remerciement.Controls.AddRange(@(
+        $listView_Remerciement,
         $label_Remerciement_Contributeurs
     ))
     #endregion
